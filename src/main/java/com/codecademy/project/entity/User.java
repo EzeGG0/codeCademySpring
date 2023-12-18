@@ -1,7 +1,12 @@
 package com.codecademy.project.entity;
 
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -43,4 +48,8 @@ public class User {
 
     @Column(name = "INTERESTED_IN_DAIRY")
     private Boolean interestedInDairy;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<DinnerReview> dinnerReviews;
+
 }

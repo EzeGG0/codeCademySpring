@@ -7,6 +7,8 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 import com.codecademy.project.enums.ReviewStatus;
 
@@ -45,4 +47,12 @@ public class DinnerReview {
     @Column(name = "STATUS")
     @Enumerated(EnumType.STRING) // Specify enum storage strategy
     private ReviewStatus status; // New addition - review status
+
+    @ManyToOne
+    @JoinColumn(name = "USER_ID") // Maps to User ID column in DinnerReview
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "RESTAURANT_ID")
+    private Restaurant restaurant;
 }
