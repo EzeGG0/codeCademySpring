@@ -28,4 +28,9 @@ public class RestaurantController {
         return ResponseEntity.ok(allRestaurants);
     }
     
+    @GetMapping("/name")
+    public ResponseEntity<List<Restaurant>> getRestaurantByName(@RequestParam String name) {
+        List<Restaurant> byName = restaurantRepository.findByName(name);
+        return ResponseEntity.ok(byName);
+    }
 }
