@@ -11,6 +11,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 import com.codecademy.project.enums.ReviewStatus;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.micrometer.common.lang.NonNull;
 import jakarta.persistence.Table;
@@ -32,9 +33,6 @@ public class DinnerReview {
     @Column(name = "USERNAME")
     @NonNull
     private String username;
-    @Column(name = "RESTAURANT_REVIEW")
-    @NonNull
-    private Long restaurantReview;
     @Column(name = "PEANUT_SCORE")
     private Integer peanutScore;
     @Column(name = "EGG_SCORE")
@@ -49,10 +47,12 @@ public class DinnerReview {
     private ReviewStatus status; // New addition - review status
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "USER_ID") // Maps to User ID column in DinnerReview
     private User user;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "RESTAURANT_ID")
     private Restaurant restaurant;
 }

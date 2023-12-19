@@ -4,6 +4,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
+import java.util.Iterator;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -14,7 +15,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Table;
 import lombok.*;
 
-@Table(name = "PAGE_USERS")
+@Table(name = "users")
 @Setter @Getter
 @AllArgsConstructor
 @NoArgsConstructor

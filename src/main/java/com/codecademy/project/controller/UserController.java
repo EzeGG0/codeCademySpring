@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.codecademy.project.entity.DinnerReview;
 import com.codecademy.project.entity.User;
+import com.codecademy.project.repository.DinningRepository;
 import com.codecademy.project.repository.UserRepository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -26,6 +28,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class UserController {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private DinningRepository dinningRepository;
 
     // GetMapping
     @GetMapping("/all-users")
@@ -49,6 +53,10 @@ public class UserController {
     public ResponseEntity<String> createUser(@RequestBody User newUser) {
         Optional<User> existingUserOptional = userRepository.findByName(newUser.getName());
 
+        if (newUser.getDinnerReviews() != null && !newUser.getDinnerReviews().isEmpty()) {
+            return ResponseEntity.badRequest().body("User creation cannot include reviews.");
+          }
+          
         if(existingUserOptional.isPresent()) {
             return ResponseEntity.badRequest().body("The name is in use");
         }
@@ -94,5 +102,26 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
+        /* 
+        @PutMapping("/reviews/{id}")
+        public ResponseEntity<User> createDinnerReviews(
+        @RequestBody DinnerReview newDinnerReview,
+        @PathVariable Long id
+        ) {
+            Optional<User> userOptional = userRepository.findById(id);
+            if (!userOptional.isPresent()) {
+                return ResponseEntity.notFound().build();
+            }
+
+            User user = userOptional.get();
+            newDinnerReview.setUser(user); // Set User relationship for the new review
+
+            // Optionally set Restaurant relationship based on Restaurant ID or object
+
+            dinningRepository.save(newDinnerReview); // Save the new DinnerReview
+
+            return ResponseEntity.ok(user); // Return the updated User object
+    }
+        */
     // DeleteMapping
 }
